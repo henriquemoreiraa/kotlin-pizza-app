@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SummaryFragment">
+
+    <data>
+
+        <variable
+            name="summaryFragment"
+            type="com.example.pizzaapp.SummaryFragment" />
+
+        <variable
+            name="viewModel"
+            type="com.example.pizzaapp.model.OrderViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.example.pizzaapp.adapter.AdditionalAdapter" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/pizza_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:textAlignment="viewStart"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Pizza de calabresa" />
+
+        <TextView
+            android:id="@+id/pizza_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:textColor="@color/gray_subtext"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/pizza_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/pizza_name"
+            tools:text="$10.00" />
+
+        <TextView
+            android:id="@+id/additional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/additional"
+            app:layout_constraintTop_toBottomOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="70dp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="@android:drawable/divider_horizontal_textfield"
+            app:layout_constraintBottom_toBottomOf="@id/additional"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/additional"
+            app:layout_constraintTop_toTopOf="@+id/additional" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="@android:drawable/divider_horizontal_textfield"
+            app:layout_constraintBottom_toBottomOf="@+id/delivery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/delivery"
+            app:layout_constraintTop_toTopOf="@+id/delivery"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/delivery_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@{@string/delivery_price(viewModel.deliveryPrice)}"
+            android:textColor="@color/gray_subtext"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/subtotal"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Delivery $10.00" />
+
+
+        <TextView
+            android:id="@+id/subtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/buy"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="TOTAL $10.00"
+            android:text="@{@string/total(viewModel.price)}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="22dp"
+            android:paddingBottom="22dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/additional"
+            app:layoutManager="LinearLayoutManager" />
+
+        <TextView
+            android:id="@+id/delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="@string/delivery"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/delivery">
+
+            <RadioButton
+                android:id="@+id/date1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Today"
+                android:text="@{viewModel.dateOptions[0]}"
+                android:checked="@{viewModel.deliveryDate.equals(viewModel.dateOptions[0])}"
+                android:onClick="@{() -> viewModel.setDate(viewModel.dateOptions[0])}"
+                android:buttonTint="@color/main_color" />
+
+            <RadioButton
+                android:id="@+id/date2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Tomorrow (19/02/23)"
+                android:text="@{viewModel.dateOptions[1]}"
+                android:checked="@{viewModel.deliveryDate.equals(viewModel.dateOptions[1])}"
+                android:onClick="@{() -> viewModel.setDate(viewModel.dateOptions[1])}"
+                android:buttonTint="@color/main_color" />
+
+            <RadioButton
+                android:id="@+id/date3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="20/02/23"
+                android:text="@{viewModel.dateOptions[2]}"
+                android:checked="@{viewModel.deliveryDate.equals(viewModel.dateOptions[2])}"
+                android:onClick="@{() -> viewModel.setDate(viewModel.dateOptions[2])}"
+                android:buttonTint="@color/main_color" />
+
+            <RadioButton
+                android:id="@+id/date4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="21/02/23"
+                android:text="@{viewModel.dateOptions[3]}"
+                android:checked="@{viewModel.deliveryDate.equals(viewModel.dateOptions[3])}"
+                android:onClick="@{() -> viewModel.setDate(viewModel.dateOptions[3])}"
+                android:buttonTint="@color/main_color" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/buy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="6dp"
+            android:backgroundTint="#F44336"
+            android:text="@string/buy_button"
+            android:onClick="@{() -> summaryFragment.onClickBuyButton()}"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cancel"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize15Percent" />
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="6dp"
+            android:text="@string/cancel_button"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/main_color"
+            style="?attr/materialButtonOutlinedStyle"
+            android:onClick="@{() -> summaryFragment.onClickCancelButton()}"
+            app:strokeColor="#F44336"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buy"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize15Percent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
