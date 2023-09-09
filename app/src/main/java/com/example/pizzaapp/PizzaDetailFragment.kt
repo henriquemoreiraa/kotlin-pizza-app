@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.pizzaapp.data.Datasource
 import com.example.pizzaapp.databinding.FragmentPizzaDetailBinding
+import com.example.pizzaapp.model.ADDITIONAL_PRICE
 import com.example.pizzaapp.model.OrderViewModel
 import com.example.pizzaapp.model.Pizza
 import com.example.pizzaapp.model.SAME_DAY_DELIVERY_PRICE
@@ -64,6 +66,13 @@ class PizzaDetailFragment : Fragment() {
         )
 
         findNavController().navigate(R.id.action_pizzaDetailFragment_to_summaryFragment)
+    }
+
+    fun setAdditionalIfChecked(additionalChecked: CompoundButton) {
+        sharedViewModel.setAdditional(
+            additionalChecked.text.toString(),
+            additionalChecked.isChecked
+        )
     }
 
     override fun onDestroyView() {

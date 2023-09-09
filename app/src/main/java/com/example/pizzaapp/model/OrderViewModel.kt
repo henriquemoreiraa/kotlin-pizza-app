@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
-import com.example.pizzaapp.R
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -56,14 +55,14 @@ class OrderViewModel : ViewModel() {
         addPrice(_deliveryPrice.value!!)
     }
 
-    fun setAdditional(additionalChecked: CompoundButton) {
-        val additionalName = additionalChecked.text.toString()
-        if (additionalChecked.isChecked) {
-            _additional.add(additionalName)
+
+    fun setAdditional(additional: String, isChecked: Boolean) {
+        if (isChecked) {
+            _additional.add(additional)
             addPrice(ADDITIONAL_PRICE)
             return
         }
-        _additional.remove(additionalName)
+        _additional.remove(additional)
         _price.value = _price.value?.minus(ADDITIONAL_PRICE)
     }
 
